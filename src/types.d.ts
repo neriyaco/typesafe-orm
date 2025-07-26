@@ -1,1 +1,1 @@
-declare type Constructor<T> = { new(...args: unknown[]): T };
+declare type Constructor<T> = { new (...args: unknown[]): T };

@@ -1,5 +1,5 @@
-import type Model from "../model/base";
-import type { Field } from "../model/field";
+import type Model from "@/model/base";
+import type { Field } from "@/model/field";
 import type { FieldOperator } from "./operator";
 
 namespace Query {
