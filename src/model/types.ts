@@ -7,12 +7,12 @@ export type Writable<T extends Model> = {
 
 export type ModelArgs<T> = {
   [K in keyof T]: T[K] extends Field<infer R, infer HasDefault>
-    ? HasDefault extends true
-      ? R | undefined
-      : R
-    : never;
+  ? HasDefault extends true
+  ? R | undefined
+  : R
+  : never;
 } extends infer O
   ? { [K in keyof O as undefined extends O[K] ? K : never]?: O[K] } & {
-      [K in keyof O as undefined extends O[K] ? never : K]: O[K];
-    }
+    [K in keyof O as undefined extends O[K] ? never : K]: O[K];
+  }
   : never;
