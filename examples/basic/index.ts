@@ -7,7 +7,5 @@ class User extends Model {
   age = field(Number);
 }
 
-const user = User.where("age", 1).get();
+const user = User.select().where("age", 1).whereIn("id", [1]).get();
 user.age = 1;
-
-User.create({ age: 1 });

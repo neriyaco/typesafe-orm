@@ -6,9 +6,15 @@ import type Query from "./types";
 export class QueryBuilder<M extends Model> {
   private readonly clauses: Query.ClauseMap<M> = {
     where: [],
+    select: [],
   };
 
-  constructor(private readonly ModelType: Constructor<M>) {}
+  constructor(private readonly ModelType: Constructor<M>) { }
+
+  select(...fields: Array<Query.SelectField<M>>) {
+    this.clauses.select.push(...fields);
+    return this;
+  }
 
   where(...[field, ...wheres]: Query.WhereArgs<M>) {
     this.clauses.where.push({
@@ -20,7 +26,7 @@ export class QueryBuilder<M extends Model> {
     return this;
   }
 
-  whereIn(field: keyof M, values: any[]) {
+  whereIn<K extends keyof M>(field: K, values: Query.FieldValue<M, K>[]) {
     this.clauses.where.push({
       field,
       operator: FieldOperator.In,

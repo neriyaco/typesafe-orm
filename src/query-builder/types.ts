@@ -1,6 +1,8 @@
 import type Model from "@/model/base";
 import type { Field } from "@/model/field";
+
 import type { FieldOperator } from "./operator";
+import _Operators from "./operators";
 
 namespace Query {
     export type FieldValue<T extends Model, K extends keyof T> = T[K] extends Field ? InstanceType<T[K]["type"]> : never;
@@ -13,9 +15,14 @@ namespace Query {
         value: any;
     }
 
+    export type SelectField<T extends Model> = keyof T | "*";
+
     export type ClauseMap<T extends Model> = {
         where: WhereClause<T>[];
+        select: SelectField<T>[];
     }
+
+    export const Operators = _Operators;
 }
 
 

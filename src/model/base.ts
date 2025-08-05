@@ -37,6 +37,17 @@ class Model {
     return Model._queryBuilder<T>(this).where(...wheres);
   }
 
+  static select<T extends Model>(
+    this: Constructor<T>,
+    selectField?: Query.SelectField<T>,
+    ...selectFields: Query.SelectField<T>[]
+  ) {
+    if (!selectField) {
+      selectField = "*";
+    }
+    return Model._queryBuilder<T>(this).select(selectField, ...selectFields);
+  }
+
   private static _queryBuilder<T extends Model>(
     constructor: Constructor<T>
   ): QueryBuilder<T> {
