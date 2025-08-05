@@ -44,29 +44,11 @@ class Model {
   }
 
   static create<T extends Model>(this: Constructor<T>, args?: ModelArgs<T>) {
-    const ModelClass = this as Constructor<Writable<T>>;
-    return new Proxy(new ModelClass(), {
-      set(target: any, key, value) {
-        if (typeof key === "symbol") {
-          target[key] = value;
-          return true;
-        }
-        if (!(key in target)) {
-          throw new TypeError(
-            `Property ${key} does not exist on model ${target.constructor.name}`
-          );
-        }
-
-        switch (true) {
-          case target[key] instanceof Field:
-            target[key].value = value;
-            break;
-          default:
-            throw new TypeError(`Property ${key} is not a field`);
-        }
-        return true;
-      },
-    });
+    const model = new this() as Writable<T>;
+    if (args) {
+      Object.assign(model, args);
+    }
+    return model;
   }
 }
 
